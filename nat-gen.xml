@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+<Header>none</Header>
+<Version>none</Version>
+<Year>none</Year>
+<Mon>none</Mon>
+<Day>none</Day>
+<Hms>use</Hms>
+<HostName>none</HostName>
+<AppName>none</AppName>
+<ProcId>none</ProcId>
+<MsgId>none</MsgId>
+<L4>none</L4>
+<OriSIp>none</OriSIp>
+<OriSIpV6>none</OriSIpV6>
+<TranSIp>none</TranSIp>
+<OriSPort>none</OriSPort>
+<TranFPort>none</TranFPort>
+<TranSPort>none</TranSPort>
+</config>
