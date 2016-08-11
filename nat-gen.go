@@ -57,6 +57,10 @@ var xmlnode []string
 var recvin uint64
 var temprecv uint64
 var natconfig *autoconfig.AutoConfig
+var (
+	buildtime = "2016-01-09 UTC"
+	githash   = "master"
+)
 
 func init() {
 	//config
@@ -166,9 +170,16 @@ func InitConfig() {
 
 }
 func main() {
+
+	version := flag.Bool("v", false, "version")
 	flag.Parse()
 	if sessiontype != nil {
 		fmt.Println("CGN Type ", *sessiontype)
+	}
+	if *version {
+		fmt.Println("git commit hash:", githash)
+		fmt.Println("utc build time", buildtime)
+		return
 	}
 	go func() {
 		log.Println(http.ListenAndServe(profileserver, nil))
