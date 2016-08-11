@@ -60,6 +60,7 @@ var natconfig *autoconfig.AutoConfig
 var (
 	buildtime = "2016-01-09 UTC"
 	githash   = "master"
+	ver       = "1.0"
 )
 
 func init() {
@@ -179,6 +180,7 @@ func main() {
 	if *version {
 		fmt.Println("git commit hash:", githash)
 		fmt.Println("utc build time", buildtime)
+		fmt.Println("version:", ver)
 		return
 	}
 	go func() {
