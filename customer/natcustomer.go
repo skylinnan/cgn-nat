@@ -21,6 +21,7 @@ type Session struct {
 
 var db *sql.DB
 var stmt *sql.Stmt
+var sqlnode []string
 
 func NewSession(l *logs.BeeLogger, x []string, s string) *Session {
 	ss := new(Session)
@@ -94,7 +95,9 @@ func (s *Session) WriteSysLog(data []byte) {
 	tstr := y + "-" + month + "-" + d + " " + hms
 	lognode["Map_Time"] = tstr
 	lognode["Type"] = EncodeMsgId(lognode["MsgId"])
-	row, err := stmt.Query(lognode["Type"], lognode["OriSIp"], lognode["TranFPort"], lognode["TranSPort"], lognode["TranSIp"], lognode["Map_Time"])
+	sql := stmtsql(lognode, sqlnode)
+	//row, err := stmt.Query(lognode["Type"], lognode["OriSIp"], lognode["TranFPort"], lognode["TranSPort"], lognode["TranSIp"], lognode["Map_Time"])
+	row, err := stmt.QuerySlice(sql)
 	if err != nil {
 		s.logfile.Info("Query err:%s|[%s]", str, err.Error())
 		return
@@ -105,13 +108,34 @@ func (s *Session) WriteSysLog(data []byte) {
 		s.logfile.Info("result:%s|%d", str, result)
 	}
 }
+func stmtsql(lognode map[string]string, sqlnode []string) []string {
+	rs := make([]string, 0, 10)
+	for _, n := range sqlnode {
+		fmt.Println(n)
+		v, ok := lognode[n]
+		if ok {
+			fmt.Println(v)
+			rs = append(rs, v)
+		} else {
+			rs = append(rs, " ")
+		}
+	}
+	return rs
+}
 func (s *Session) ReloadXML(iniconf config.Configer) {
 	return
 }
 func FormatSql(sql string) string {
 
 	var digitsRegexp = regexp.MustCompile(`\${.*?}`)
+	node := digitsRegexp.FindAllString(sql, -1)
+	for _, v := range node {
+		v = strings.Replace(v, "${", "", -1)
+		v = strings.Replace(v, "}", "", -1)
+		sqlnode = append(sqlnode, v)
+	}
 	s := digitsRegexp.ReplaceAllString(sql, "?")
+
 	return s
 }
 func ReplaceDot(s string) string {
