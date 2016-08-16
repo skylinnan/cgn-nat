@@ -111,10 +111,8 @@ func (s *Session) WriteSysLog(data []byte) {
 func stmtsql(lognode map[string]string, sqlnode []string) []string {
 	rs := make([]string, 0, 10)
 	for _, n := range sqlnode {
-		fmt.Println(n)
 		v, ok := lognode[n]
 		if ok {
-			fmt.Println(v)
 			rs = append(rs, v)
 		} else {
 			rs = append(rs, " ")
