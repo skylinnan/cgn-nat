@@ -106,6 +106,7 @@ func (s *Session) WriteSysLog(data []byte) {
 		var result int
 		row.Scan(&result)
 		s.logfile.Info("result:%s|%d", str, result)
+		return
 	}
 	s.logfile.Debug("result is null.[%s]", str)
 }
