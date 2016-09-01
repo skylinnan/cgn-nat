@@ -107,6 +107,7 @@ func (s *Session) WriteSysLog(data []byte) {
 		row.Scan(&result)
 		s.logfile.Info("result:%s|%d", str, result)
 	}
+	s.logfile.Debug("result is null.[%s]", str)
 }
 func stmtsql(lognode map[string]string, sqlnode []string) []string {
 	rs := make([]string, 0, 10)
