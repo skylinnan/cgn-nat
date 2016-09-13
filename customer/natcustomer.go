@@ -98,6 +98,7 @@ func (s *Session) WriteSysLog(data []byte) {
 	sql := stmtsql(lognode, sqlnode)
 	//row, err := stmt.Query(lognode["Type"], lognode["OriSIp"], lognode["TranFPort"], lognode["TranSPort"], lognode["TranSIp"], lognode["Map_Time"])
 	row, err := stmt.QuerySlice(sql)
+	defer row.Close()
 	if err != nil {
 		s.logfile.Info("Query err:%s|[%s]", str, err.Error())
 		return
